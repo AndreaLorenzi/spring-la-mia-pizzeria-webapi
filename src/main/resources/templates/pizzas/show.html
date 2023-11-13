@@ -3,20 +3,23 @@
 <head th:insert="fragments/resources :: headResources('Pizza List')"></head>
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
-<div class="container" th:object="${pizza}">
-    <dl>
-        <dt>Name</dt>
-        <dd th:text="*{name}"></dd>
-        <dt>Image</dt>
-        <img class="d-block h-25 w-25" th:src="*{imageUrl}">
-        <dt>Price</dt>
-        <dd th:text="*{price}"></dd>
-        <dt>Description</dt>
-        <dd th:text="*{description}"></dd>
-    </dl>
-    <div class="mt-2">
-        <a th:href="@{/pizzas}" class="btn btn-primary">Back to list</a>
+<div class="container">
+    <div style="margin-top:2rem;" th:object="${pizza}">
+        <dl style="margin-left:33%;">
+            <dt>Name</dt>
+            <dd th:text="*{name}"></dd>
+            <dt>Image</dt>
+            <img class="d-block h-25 w-25" th:src="*{imageUrl}">
+            <dt>Price</dt>
+            <dd th:text="*{price}"></dd>
+            <dt>Description</dt>
+            <dd th:text="*{description}"></dd>
+        </dl>
+        <div style="margin-left:33%;" class="mt-2">
+            <a th:href="@{/pizzas}" class="btn btn-secondary">Back to list</a>
+        </div>
     </div>
 </div>
+
 </body>
 </html>
