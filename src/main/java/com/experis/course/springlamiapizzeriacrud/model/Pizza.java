@@ -2,6 +2,10 @@ package com.experis.course.springlamiapizzeriacrud.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pizzas")
@@ -10,9 +14,17 @@ public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank(message = "Name must be not blank")
+    @Size(max = 255, message = "lenght must be less than 255")
     private String name;
+    @NotBlank(message = "Description must be not blank")
+    @Size(max = 255, message = "lenght must be less than 255")
     private String description;
+    @NotBlank(message = "imageUrl must be not blank")
+    @Size(max = 255, message = "lenght must be less than 255")
     private String imageUrl;
+    @NotNull(message = "Price must not be null")
+    @DecimalMin(value = "1", message = "Price must be greater than 0")
     private double price;
 
     public Integer getId() {

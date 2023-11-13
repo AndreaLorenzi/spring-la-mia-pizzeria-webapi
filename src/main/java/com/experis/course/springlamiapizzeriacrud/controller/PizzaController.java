@@ -2,15 +2,15 @@ package com.experis.course.springlamiapizzeriacrud.controller;
 
 import com.experis.course.springlamiapizzeriacrud.model.Pizza;
 import com.experis.course.springlamiapizzeriacrud.repository.PizzaRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -52,5 +52,27 @@ public class PizzaController {
             // se non ho trovato il libro sollevo un'eccezione
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "pizza with id " + id + " not found");
         }
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("pizza", new Pizza());
+        return "pizzas/create";
+    }
+
+    @PostMapping("/create")
+    public String doCreate(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // ci sono errori, devo ricaricare il form
+            return "pizzas/create";
+        }
+        Pizza savedPizza = null;
+        try {
+            savedPizza = pizzaRepository.save(formPizza);
+        } catch (RuntimeException e) {
+            bindingResult.addError(new FieldError("pizza", "name", formPizza.getName(), false, null, null, "Name must be unique"));
+            return "pizzas/create";
+        }
+        return "redirect:/pizzas/show/" + savedPizza.getId();
     }
 }
