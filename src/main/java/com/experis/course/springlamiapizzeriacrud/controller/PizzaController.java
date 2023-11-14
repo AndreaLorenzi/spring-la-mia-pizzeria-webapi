@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,22 +58,67 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
-        return "pizzas/create";
+        return "pizzas/form";
     }
 
     @PostMapping("/create")
     public String doCreate(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             // ci sono errori, devo ricaricare il form
-            return "pizzas/create";
+            return "pizzas/form";
         }
         Pizza savedPizza = null;
         try {
             savedPizza = pizzaRepository.save(formPizza);
         } catch (RuntimeException e) {
             bindingResult.addError(new FieldError("pizza", "name", formPizza.getName(), false, null, null, "Name must be unique"));
-            return "pizzas/create";
+            return "pizzas/form";
         }
         return "redirect:/pizzas/show/" + savedPizza.getId();
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        // a partire dall'id recupero i dati del libro
+        Optional<Pizza> result = pizzaRepository.findById(id);
+        if (result.isPresent()) {
+            // aggiungo il book come attributo del Model
+            model.addAttribute("pizza", result.get());
+            // proseguo a restituire la pagina di modifica
+            return "/pizzas/form";
+        } else {
+            // sollevo un'eccesione con HttpStatus 404
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
+        }
+    }
+
+    @PostMapping("/edit/{id}")
+    public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza,
+                         BindingResult bindingResult) {
+        // valido il libro
+        if (bindingResult.hasErrors()) {
+            // se ci sono errori ricarico la pagina col form
+            return "/pizzas/form";
+        }
+        Pizza pizzaToEdit = pizzaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        pizzaToEdit.setName(formPizza.getName());
+        pizzaToEdit.setDescription(formPizza.getDescription());
+        pizzaToEdit.setImageUrl(formPizza.getImageUrl());
+        pizzaToEdit.setPrice(formPizza.getPrice());
+
+        Pizza savedPizza = pizzaRepository.save(pizzaToEdit);
+        return "redirect:/pizzas/show/" + savedPizza.getId();
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        // recupero il libro con quell'id
+        Pizza pizzaToDelete = pizzaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        // se esiste lo elimino
+        pizzaRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("message",
+                "pizza " + pizzaToDelete.getName() + " deleted!");
+        return "redirect:/pizzas";
     }
 }

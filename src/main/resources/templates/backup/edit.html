@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="/fragments/resources :: headResources('La Tua Pizzeria')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar(' New pizzas')"></nav>
+<div class="container">
+    <h1>Edit pizza</h1>
+    <hr>
+    <!-- form di creazione del book -->
+    <form
+            id="pizza-edit"
+            method="POST"
+            th:action="@{/pizzas/edit/{id}(id=${pizza.id}}"
+            th:object="${pizza}"
+            class="row gy-2"
+    >
+        <!-- name -->
+        <div class="col-4"
+             th:insert="fragments/components :: formField('text', 'Name', 'name')"></div>
+
+        <!-- img -->
+        <div class="col-4"
+             th:insert="fragments/components :: formField('text', 'Image', 'imageUrl')">
+        </div>
+        <!-- price -->
+        <div class="col-4" th:insert="fragments/components :: formField('number', 'Price', 'price')">
+
+        </div>
+        <!-- description -->
+        <div class="col-12" th:insert="fragments/components :: formField('text', 'Description', 'description')">
+        </div>
+        <!-- actions -->
+        <div class="col-12">
+            <button class="btn btn-secondary" type="submit">Save</button>
+            <a th:href="@{/pizzas}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
