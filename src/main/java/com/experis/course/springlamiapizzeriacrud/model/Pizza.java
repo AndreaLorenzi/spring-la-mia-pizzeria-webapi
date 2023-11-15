@@ -4,6 +4,9 @@ package com.experis.course.springlamiapizzeriacrud.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "pizzas")
 public class Pizza {
@@ -24,6 +27,9 @@ public class Pizza {
     @Min(value = 1, message = "Price must be greater than 0")
     @Max(value = 50, message = "Price must be smaller than 50")
     private double price;
+
+    @OneToMany(mappedBy = "pizza")
+    private List<Discount> discounts = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -63,5 +69,13 @@ public class Pizza {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(List<Discount> discounts) {
+        this.discounts = discounts;
     }
 }
