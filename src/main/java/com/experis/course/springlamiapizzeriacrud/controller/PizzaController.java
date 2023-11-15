@@ -120,5 +120,6 @@ public class PizzaController {
         redirectAttributes.addFlashAttribute("message",
                 "pizza " + pizzaToDelete.getName() + " deleted!");
         return "redirect:/pizzas";
+
     }
 }
