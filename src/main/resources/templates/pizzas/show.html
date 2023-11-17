@@ -18,6 +18,13 @@
         <div style="margin-left:33%;" class="mt-2">
             <a th:href="@{/pizzas}" class="btn btn-secondary">Back to list</a>
         </div>
+        <div class="col-4">
+            <h3>Categories</h3>
+            <ul th:if="*{ingredients.size() > 0}">
+                <li th:each="ingredientObj : *{ingredients}" th:text="${ingredientObj.name}"></li>
+            </ul>
+            <div th:unless="*{ingredients.size() > 0}" class="alert alert-info">The list is empty</div>
+        </div>
 
         <section>
             <h2>discount
@@ -48,11 +55,14 @@
                                 th:href="@{/discounts/edit/{id}(id=*{id})}" title="edit">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
+                        <form method="POST" th:action="@{/discounts/delete/{id}(id=*{id})}"
+                              onsubmit="return confirm('Are you sure?')">
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <!--<div th:if="*{discounts.size() == 0}" class="alert alert-info">The list is empty</div>-->
         </section>
     </div>
 </div>

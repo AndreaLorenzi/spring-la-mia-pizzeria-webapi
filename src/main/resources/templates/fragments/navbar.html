@@ -18,6 +18,11 @@
                     <a class="nav-link" th:classAppend="${area == 'Aggiungi pizza' ? 'active' : ''}"
                        th:href="@{/pizzas/create}">Create pizza</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classAppend="${area == 'Aggiungi ingrediente' ? 'active' : ''}"
+                       th:href="@{/ingredients}">Crea ingredienti</a>
+                </li>
+
             </ul>
         </div>
     </div>

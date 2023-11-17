@@ -3,6 +3,7 @@ package com.experis.course.springlamiapizzeriacrud.controller;
 import com.experis.course.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import com.experis.course.springlamiapizzeriacrud.model.Pizza;
 import com.experis.course.springlamiapizzeriacrud.repository.PizzaRepository;
+import com.experis.course.springlamiapizzeriacrud.service.IngredientService;
 import com.experis.course.springlamiapizzeriacrud.service.PizzaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class PizzaController {
     @Autowired
     private PizzaService pizzaService;
 
+    @Autowired
+    private IngredientService ingredientService;
+
     @GetMapping
     public String index(@RequestParam Optional<String> search, Model model) {
         model.addAttribute("pizzaList", pizzaService.getPizzaList(search));
@@ -48,13 +52,15 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredientList", ingredientService.getAll());
         return "pizzas/form";
     }
 
     @PostMapping("/create")
-    public String doCreate(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+    public String doCreate(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             // ci sono errori, devo ricaricare il form
+            model.addAttribute("ingredientList", ingredientService.getAll());
             return "pizzas/form";
         }
         try {
@@ -70,6 +76,7 @@ public class PizzaController {
     public String edit(@PathVariable Integer id, Model model) {
         try {
             model.addAttribute("pizza", pizzaService.getPizzaById(id));
+            model.addAttribute("ingredientList", ingredientService.getAll());
             return "/pizzas/form";
         } catch (PizzaNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -78,10 +85,11 @@ public class PizzaController {
 
     @PostMapping("/edit/{id}")
     public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult, Model model) {
         // valido il libro
         if (bindingResult.hasErrors()) {
             // se ci sono errori ricarico la pagina col form
+            model.addAttribute("ingredientList", ingredientService.getAll());
             return "/pizzas/form";
         }
         try {

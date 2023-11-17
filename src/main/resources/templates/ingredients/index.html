@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Ingredients')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('Ingredients')"></nav>
+<div class="container">
+    <!-- message da redirectAttributes -->
+    <div th:replace="fragments/components :: message"></div>
+    <h1>Categories</h1>
+    <hr>
+    <section>
+        <table class="border-bottom border-secondary table table-dark table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ing : ${ingredientList}" th:object="${ing}" class="m-0">
+                <td th:text="*{name}"></td>
+                <td>
+                    <div class=" d-flex align-items-center">
+                        <!--<button class="btn btn-info mx-1">
+                            <a th:href="@{pizzas/show/{id}(id={id})}" class="text-light">
+                                <i class="fa-solid fa-pizza-slice">
+                                </i>
+                            </a>
+                        </button>-->
+                        <!--<button class="btn btn-primary mx-1">
+                            <a th:href="@{pizzas/edit/{id}(id={id})}" class="text-light">
+                                <i class="fa-solid fa-pen-to-square">
+                                </i>
+                            </a>
+                        </button>-->
+                        <form method="POST" th:action="@{ingredients/delete/{id}(id=*{id})}"
+                              onsubmit="return confirm('Are you sure?')"
+                        >
+                            <button type="submit" class="btn btn-danger mx-1">
+                                <i class="fa-solid fa-trash">
+                                </i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+
+
+            </tr>
+            </tbody>
+        </table>
+
+        <form
+                id="category-form"
+                th:action="@{/ingredients}"
+                method="POST"
+                th:object="${ingredientObj}"
+        >
+            <div class="mb-3"
+                 th:insert="fragments/components :: formField('text', 'Category name', 'name')">
+            </div>
+            <button class="btn btn-primary" type="submit">Add category</button>
+        </form>
+    </section>
+    <section class="mt-4">
+        <ul class="list-group">
+            <li
+                    th:each="ingredient : ${ingredientList}"
+                    th:text="${ing.name}"
+                    class="list-group-item"
+            ></li>
+        </ul>
+    </section>
+</div>
+</body>
+</html>

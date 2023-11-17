@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -62,5 +63,21 @@ public class DiscountController {
         }
         Discount savedDiscount = discountService.saveDiscount(formDiscount);
         return "redirect:/pizzas/show/" + formDiscount.getPizza().getId();
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        // cancello il discount
+        try {
+            Discount discountToDelete = discountService.getDiscount(id);
+            discountService.deleteDiscount(discountToDelete);
+            redirectAttributes.addFlashAttribute("message", " Discount deleted!");
+            return "redirect:/pizzas/show/" + discountToDelete.getPizza().getId();
+        } catch (DiscountNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
+        //e faccio la redirect
+
     }
 }

@@ -5,3 +5,21 @@ INSERT INTO db_pizza.pizzas(description, image_url, name, price)VALUES('Melanzan
 INSERT INTO db_pizza.pizzas(description, image_url, name, price)VALUES('Salsiccia, funghi, mozzarella', 'https://www.alfaforni.com/wp-content/uploads/2018/08/pizza-boscaiola-wild-traditional-mushroom-pizza.jpg', 'Pizza boscaiola', 11.99);
 INSERT INTO db_pizza.pizzas(description, image_url, name, price)VALUES('Prosciutto crudo, funghi, rucola', 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS_7fjwzt6k3l8JMA7UawzdFClpxEcWQFrmKIg0mcjVjRuWQ8kqiSixdhDS8UgXJPgnsx4aeDUoh-vjYn7po_PrRmq_y83EJ3Auo_O49iaP90WqV9FlgApVtQ&usqp=CAE', 'Pizza Prosciutto e Funghi', 12.99);
 INSERT INTO db_pizza.pizzas(description, image_url, name, price)VALUES('Gorgonzola, noci, pere', 'https://www.igorgorgonzola.com/sistemaNews/newsFoto/videoricette2014/pizza-gourmet-pere-gorgonzola-gran-riserva-leonardi-L.jpg', 'Pizza Gorgonzola e Pere', 11.99);
+
+
+INSERT INTO ingredients(name) VALUES('Peperoni');
+INSERT INTO ingredients(name) VALUES('Funghi');
+INSERT INTO ingredients(name) VALUES('Mozzarella');
+INSERT INTO ingredients(name) VALUES('Pomodoro');
+INSERT INTO ingredients(name) VALUES('Cipolla');
+INSERT INTO ingredients(name) VALUES('Peperoncino');
+INSERT INTO ingredients(name) VALUES('Zucchine');
+INSERT INTO ingredients(name) VALUES('noci');
+INSERT INTO ingredients(name) VALUES('Prosciutto crudo');
+INSERT INTO ingredients(name) VALUES('Rucola');
+INSERT INTO ingredients(name) VALUES('Formaggio');
+INSERT INTO ingredients(name) VALUES('Olive nere');
+INSERT INTO ingredients(name) VALUES('Pere');
+INSERT INTO ingredients(name) VALUES('Salsiccia');
+INSERT INTO ingredients(name) VALUES('Salsiccia piccante');
+INSERT INTO ingredients(name) VALUES('Gorgonzola');

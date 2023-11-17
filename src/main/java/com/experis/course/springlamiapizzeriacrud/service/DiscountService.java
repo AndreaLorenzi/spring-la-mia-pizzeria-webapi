@@ -34,4 +34,8 @@ public class DiscountService {
     public Discount getDiscount(Integer id) throws DiscountNotFoundException {
         return discountRepository.findById(id).orElseThrow(() -> new DiscountNotFoundException("Discount with id " + id + " not found"));
     }
+
+    public void deleteDiscount(Discount discount) {
+        discountRepository.delete(discount);
+    }
 }

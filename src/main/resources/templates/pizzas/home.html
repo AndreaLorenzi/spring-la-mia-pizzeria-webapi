@@ -4,10 +4,7 @@
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
 <div class="container">
-    <div th:if="${message !=null}" class="alert alert-success alert-dismissible fade show">
-        <span th:text="${message}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <!-- <div th:replace="fragments/components :: message"></div>-->
     <h1 class=" text-center">La tua pizzeria</h1>
     <div class="d-flex align-items-center justify-content-between">
         <h1>Our pizzas </h1>
@@ -64,6 +61,7 @@
                         <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>
                         </button>
                     </form>
+
                 </div>
 
             </td>

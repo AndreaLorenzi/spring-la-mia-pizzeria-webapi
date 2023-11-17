@@ -56,11 +56,11 @@ public class PizzaService {
         pizzaToEdit.setDescription(pizza.getDescription());
         pizzaToEdit.setImageUrl(pizza.getImageUrl());
         pizzaToEdit.setPrice(pizza.getPrice());
+        pizzaToEdit.setIngredients(pizza.getIngredients());
         return pizzaRepository.save(pizzaToEdit);
     }
 
     public void deletePizza(Integer id) {
-
         pizzaRepository.deleteById(id);
     }
 }

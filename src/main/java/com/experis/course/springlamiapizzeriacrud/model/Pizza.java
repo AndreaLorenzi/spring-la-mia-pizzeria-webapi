@@ -28,8 +28,10 @@ public class Pizza {
     @Max(value = 50, message = "Price must be smaller than 50")
     private double price;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Discount> discounts = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Ingredient> ingredients;
 
     public Integer getId() {
         return id;
@@ -71,11 +73,20 @@ public class Pizza {
         this.price = price;
     }
 
+
     public List<Discount> getDiscounts() {
         return discounts;
     }
 
     public void setDiscounts(List<Discount> discounts) {
         this.discounts = discounts;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
