@@ -19,41 +19,42 @@
             <a th:href="@{/pizzas}" class="btn btn-secondary">Back to list</a>
         </div>
 
-    <section>
-        <h2>discount
-            <a
-                    th:href="@{/discounts/create(pizzaId=*{id})}"
-            ><i class="fa-solid fa-circle-plus"></i></a>
+        <section>
+            <h2>discount
+                <a
+                        th:href="@{/discounts/create(pizzaId=*{id})}"
+                ><i class="fa-solid fa-circle-plus"></i></a>
 
-        </h2>
+            </h2>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Start date</th>
-                <th>Expire date</th>
-                <th>discount</th>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Start date</th>
+                    <th>Expire date</th>
+                    <th>discount</th>
 
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="discount : *{discounts}" th:object="${discount}">
-                <td th:text="*{startDate}"></td>
-                <td th:text="*{finishDate}"></td>
-                <td th:text="*{title}"></td>
-                <td>
-                    <a
-                            class="btn btn-primary"
-                            th:href="@{/discounts/edit/{id}(id=*{id})}" title="edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <!--<div th:if="*{discounts.size() == 0}" class="alert alert-info">The list is empty</div>-->
-    </section>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="discount : *{discounts}" th:object="${discount}">
+                    <td th:text="*{startDate}"></td>
+                    <td th:text="*{finishDate}"></td>
+                    <td th:text="*{title}"></td>
+                    <td>
+                        <a
+                                class="btn btn-primary"
+                                th:href="@{/discounts/edit/{id}(id=*{id})}" title="edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--<div th:if="*{discounts.size() == 0}" class="alert alert-info">The list is empty</div>-->
+        </section>
+    </div>
 </div>
 
 </body>
