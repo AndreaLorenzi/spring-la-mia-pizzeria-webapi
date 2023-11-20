@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <body>
 <nav th:fragment="topNavbar(area)" class="navbar navbar-expand-lg bg-secondary navbar-dark">
     <div class="container-fluid">
@@ -16,14 +16,22 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:classAppend="${area == 'Aggiungi pizza' ? 'active' : ''}"
-                       th:href="@{/pizzas/create}">Create pizza</a>
+                       th:href="@{/pizzas/create}" sec:authorize="hasAuthority('ADMIN')">Create pizza</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:classAppend="${area == 'Aggiungi ingrediente' ? 'active' : ''}"
-                       th:href="@{/ingredients}">Crea ingredienti</a>
+                       th:href="@{/ingredients}" sec:authorize="hasAuthority('ADMIN')">Create ingredients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classAppend="${area == 'User' ? 'active' : ''}"
+                       th:href="@{/users}">User</a>
                 </li>
 
             </ul>
+            <div class="text-light">
+                Hi <span sec:authentication="name"></span>
+                <a th:href="@{/logout}" class="btn btn-light">Logout</a>
+            </div>
         </div>
     </div>
 </nav>

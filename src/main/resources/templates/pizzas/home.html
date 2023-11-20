@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head th:insert="/fragments/resources :: headResources('La Tua Pizzeria')"></head>
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
@@ -22,7 +22,7 @@
     </div>
 </div>
 <div class="container d-flex justify-content-end">
-    <div class="my-3">
+    <div class="my-3" sec:authorize="hasAuthority('ADMIN')">
         <a th:href="@{/pizzas/create}" class="btn btn-secondary">Add new pizza</a>
     </div>
 </div>
@@ -53,12 +53,14 @@
                     <button class="btn btn-secondary"><a class="text-white" th:href="@{/pizzas/show/{id}(id=*{id})}"
                                                          title="details"><i
                             class="fa-solid fa-book"></i></a></button>
-                    <button class="btn btn-secondary"><a class="text-white" th:href="@{/pizzas/edit/{id}(id=*{id})}"
-                                                         title="edit"><i
+                    <button class="btn btn-secondary" sec:authorize="hasAuthority('ADMIN')"><a class="text-white"
+                                                                                               th:href="@{/pizzas/edit/{id}(id=*{id})}"
+                                                                                               title="edit"><i
                             class="fa-solid fa-pen-to-square"></i></a></button>
                     <form method="POST" th:action="@{/pizzas/delete/{id}(id=*{id})}"
                           onsubmit="return confirm('Are you sure?')">
-                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>
+                        <button type="submit" class="btn btn-danger" sec:authorize="hasAuthority('ADMIN')"><i
+                                class="fa-solid fa-trash-can"></i>
                         </button>
                     </form>
 
