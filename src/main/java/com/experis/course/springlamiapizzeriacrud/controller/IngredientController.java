@@ -57,6 +57,7 @@ public class IngredientController {
         } catch (IngredientNameUniqueException e) {
             // Gestire l'errore appropriatamente, ad esempio reindirizzando a una pagina di errore
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+
         }
     }
 }
