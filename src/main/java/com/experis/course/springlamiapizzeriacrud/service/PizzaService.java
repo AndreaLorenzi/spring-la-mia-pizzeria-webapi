@@ -5,6 +5,8 @@ import com.experis.course.springlamiapizzeriacrud.model.Pizza;
 import com.experis.course.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,6 +33,10 @@ public class PizzaService {
         }
     }
 
+    public List<Pizza> getBookList() {
+        return pizzaRepository.findAll();
+    }
+
     public Pizza getPizzaById(Integer id) throws PizzaNotFoundException {
         Optional<Pizza> result = pizzaRepository.findById(id);
         // verifico se il risultato è presente
@@ -43,6 +49,7 @@ public class PizzaService {
     }
 
     public Pizza createPizza(Pizza pizza) throws PizzaNotFoundException {
+        pizza.setId(null);
         try {
             return pizzaRepository.save(pizza);
         } catch (RuntimeException e) {
@@ -62,5 +69,9 @@ public class PizzaService {
 
     public void deletePizza(Integer id) {
         pizzaRepository.deleteById(id);
+    }
+
+    public Page<Pizza> getPage(Pageable pageable) {
+        return pizzaRepository.findAll(pageable);
     }
 }
