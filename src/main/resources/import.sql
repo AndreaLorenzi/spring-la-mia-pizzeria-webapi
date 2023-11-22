@@ -24,7 +24,7 @@ INSERT INTO ingredients(name) VALUES('Salsiccia');
 INSERT INTO ingredients(name) VALUES('Salsiccia piccante');
 INSERT INTO ingredients(name) VALUES('Gorgonzola');
 
-INSERT INTO pizzas_ingredients(pizza_id, ingredients_id) VALUES(1,1);
+INSERT INTO pizzas_ingredients(pizza_id, ingredients_id) VALUES(1,4);
 INSERT INTO pizzas_ingredients(pizza_id, ingredients_id) VALUES(1,3);
 
 INSERT INTO roles (id, name) VALUES(1, 'ADMIN');

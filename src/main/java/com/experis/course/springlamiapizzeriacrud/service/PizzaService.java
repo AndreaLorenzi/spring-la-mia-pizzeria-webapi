@@ -33,7 +33,7 @@ public class PizzaService {
         }
     }
 
-    public List<Pizza> getBookList() {
+    public List<Pizza> getPizzaList() {
         return pizzaRepository.findAll();
     }
 
